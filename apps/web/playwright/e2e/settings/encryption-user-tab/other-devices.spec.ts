@@ -6,6 +6,8 @@
  */
 
 import { createNewInstance } from "@element-hq/element-web-playwright-common";
+import { type StartedHomeserverContainer } from "@element-hq/element-web-playwright-common/lib/testcontainers";
+import { type Browser, type TestInfo } from "@playwright/test";
 
 import { test, expect } from "./index";
 import { ElementAppPage } from "../../../pages/ElementAppPage";
@@ -27,10 +29,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         await prepForEncryption(aliceElementApp, aliceCredentials);
 
         // Create a second browser instance.
-        const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
-        const bobPage = await createNewInstance(browser, bobCredentials, {});
-        const bobElementApp = new ElementAppPage(bobPage);
-        await prepForEncryption(bobElementApp, bobCredentials);
+        const { bobCredentials, bobPage } = await newBrowser(homeserver, testInfo, browser);
 
         // Create the room and invite bob
         await createRoom(alicePage, "TestRoom", true);
@@ -66,10 +65,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         await aliceElementApp.settings.closeDialog();
 
         // Create a second browser instance.
-        const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
-        const bobPage = await createNewInstance(browser, bobCredentials, {});
-        const bobElementApp = new ElementAppPage(bobPage);
-        await prepForEncryption(bobElementApp, bobCredentials);
+        const { bobCredentials, bobPage } = await newBrowser(homeserver, testInfo, browser);
 
         // Create the room and invite bob
         await createRoom(alicePage, "TestRoom", true);
@@ -109,10 +105,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         await aliceElementApp.settings.closeDialog();
 
         // Create a second browser instance.
-        const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
-        const bobPage = await createNewInstance(browser, bobCredentials, {});
-        const bobElementApp = new ElementAppPage(bobPage);
-        await prepForEncryption(bobElementApp, bobCredentials);
+        const { bobCredentials, bobPage, bobElementApp } = await newBrowser(homeserver, testInfo, browser);
 
         // Create the room and invite bob
         await createRoom(alicePage, "TestRoom", true);
@@ -141,10 +134,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         await prepForEncryption(aliceElementApp, aliceCredentials);
 
         // Create a second browser instance.
-        const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
-        const bobPage = await createNewInstance(browser, bobCredentials, {});
-        const bobElementApp = new ElementAppPage(bobPage);
-        await prepForEncryption(bobElementApp, bobCredentials);
+        const { bobCredentials, bobPage } = await newBrowser(homeserver, testInfo, browser);
 
         // Alice creates the room and invite Bob.
         await createRoom(alicePage, "TestRoom", true);
@@ -202,10 +192,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         await aliceElementApp.settings.closeDialog();
 
         // Create a second browser instance.
-        const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
-        const bobPage = await createNewInstance(browser, bobCredentials, {});
-        const bobElementApp = new ElementAppPage(bobPage);
-        await prepForEncryption(bobElementApp, bobCredentials);
+        const { bobCredentials, bobPage } = await newBrowser(homeserver, testInfo, browser);
 
         // Alice creates the room and invite Bob.
         await createRoom(alicePage, "TestRoom", true);
@@ -243,7 +230,19 @@ test.describe("Other people's devices section in Encryption tab", () => {
     });
 });
 
-async function prepForEncryption(app: ElementAppPage, credentials: CredentialsOptionalAccessToken) {
+async function newBrowser(
+    homeserver: StartedHomeserverContainer,
+    testInfo: TestInfo,
+    browser: Browser,
+): Promise<{ bobCredentials: CredentialsOptionalAccessToken; bobPage: Page; bobElementApp: ElementAppPage }> {
+    const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
+    const bobPage = await createNewInstance(browser, bobCredentials, {});
+    const bobElementApp = new ElementAppPage(bobPage);
+    await prepForEncryption(bobElementApp, bobCredentials);
+    return { bobCredentials, bobPage, bobElementApp };
+}
+
+async function prepForEncryption(app: ElementAppPage, credentials: CredentialsOptionalAccessToken): Promise<void> {
     await app.client.bootstrapCrossSigning(credentials);
     await app.closeKeyStorageToast();
 }
