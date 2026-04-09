@@ -10,6 +10,7 @@ import { createNewInstance } from "@element-hq/element-web-playwright-common";
 import { test, expect } from "./index";
 import { ElementAppPage } from "../../../pages/ElementAppPage";
 import { createRoom, sendMessageInCurrentRoom, verifyApp } from "../../crypto/utils";
+import { type CredentialsOptionalAccessToken } from "../../../pages/bot";
 
 test.describe("Other people's devices section in Encryption tab", () => {
     test.use({
@@ -23,15 +24,13 @@ test.describe("Other people's devices section in Encryption tab", () => {
         browser,
         user: aliceCredentials,
     }, testInfo) => {
-        await aliceElementApp.client.bootstrapCrossSigning(aliceCredentials);
-        await aliceElementApp.closeKeyStorageToast();
+        await prepForEncryption(aliceElementApp, aliceCredentials);
 
         // Create a second browser instance.
         const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
         const bobPage = await createNewInstance(browser, bobCredentials, {});
         const bobElementApp = new ElementAppPage(bobPage);
-        await bobElementApp.client.bootstrapCrossSigning(bobCredentials);
-        await bobElementApp.closeKeyStorageToast();
+        await prepForEncryption(bobElementApp, bobCredentials);
 
         // Create the room and invite bob
         await createRoom(alicePage, "TestRoom", true);
@@ -54,8 +53,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         user: aliceCredentials,
         util,
     }, testInfo) => {
-        await aliceElementApp.client.bootstrapCrossSigning(aliceCredentials);
-        await aliceElementApp.closeKeyStorageToast();
+        await prepForEncryption(aliceElementApp, aliceCredentials);
 
         // Enable blacklist toggle.
         const dialog = await util.openEncryptionTab();
@@ -71,8 +69,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
         const bobPage = await createNewInstance(browser, bobCredentials, {});
         const bobElementApp = new ElementAppPage(bobPage);
-        await bobElementApp.client.bootstrapCrossSigning(bobCredentials);
-        await bobElementApp.closeKeyStorageToast();
+        await prepForEncryption(bobElementApp, bobCredentials);
 
         // Create the room and invite bob
         await createRoom(alicePage, "TestRoom", true);
@@ -99,8 +96,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         user: aliceCredentials,
         util,
     }, testInfo) => {
-        await aliceElementApp.client.bootstrapCrossSigning(aliceCredentials);
-        await aliceElementApp.closeKeyStorageToast();
+        await prepForEncryption(aliceElementApp, aliceCredentials);
 
         // Enable blacklist toggle.
         const dialog = await util.openEncryptionTab();
@@ -116,8 +112,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
         const bobPage = await createNewInstance(browser, bobCredentials, {});
         const bobElementApp = new ElementAppPage(bobPage);
-        await bobElementApp.client.bootstrapCrossSigning(bobCredentials);
-        await bobElementApp.closeKeyStorageToast();
+        await prepForEncryption(bobElementApp, bobCredentials);
 
         // Create the room and invite bob
         await createRoom(alicePage, "TestRoom", true);
@@ -143,15 +138,13 @@ test.describe("Other people's devices section in Encryption tab", () => {
         browser,
         user: aliceCredentials,
     }, testInfo) => {
-        await aliceElementApp.client.bootstrapCrossSigning(aliceCredentials);
-        await aliceElementApp.closeKeyStorageToast();
+        await prepForEncryption(aliceElementApp, aliceCredentials);
 
         // Create a second browser instance.
         const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
         const bobPage = await createNewInstance(browser, bobCredentials, {});
         const bobElementApp = new ElementAppPage(bobPage);
-        await bobElementApp.client.bootstrapCrossSigning(bobCredentials);
-        await bobElementApp.closeKeyStorageToast();
+        await prepForEncryption(bobElementApp, bobCredentials);
 
         // Alice creates the room and invite Bob.
         await createRoom(alicePage, "TestRoom", true);
@@ -196,8 +189,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         user: aliceCredentials,
         util,
     }, testInfo) => {
-        await aliceElementApp.client.bootstrapCrossSigning(aliceCredentials);
-        await aliceElementApp.closeKeyStorageToast();
+        await prepForEncryption(aliceElementApp, aliceCredentials);
 
         // Enable blacklist toggle.
         let dialog = await util.openEncryptionTab();
@@ -213,8 +205,7 @@ test.describe("Other people's devices section in Encryption tab", () => {
         const bobCredentials = await homeserver.registerUser(`user_${testInfo.testId}_bob`, "password", "bob");
         const bobPage = await createNewInstance(browser, bobCredentials, {});
         const bobElementApp = new ElementAppPage(bobPage);
-        await bobElementApp.client.bootstrapCrossSigning(bobCredentials);
-        await bobElementApp.closeKeyStorageToast();
+        await prepForEncryption(bobElementApp, bobCredentials);
 
         // Alice creates the room and invite Bob.
         await createRoom(alicePage, "TestRoom", true);
@@ -251,3 +242,8 @@ test.describe("Other people's devices section in Encryption tab", () => {
         ).toBeVisible();
     });
 });
+
+async function prepForEncryption(app: ElementAppPage, credentials: CredentialsOptionalAccessToken) {
+    await app.client.bootstrapCrossSigning(credentials);
+    await app.closeKeyStorageToast();
+}
