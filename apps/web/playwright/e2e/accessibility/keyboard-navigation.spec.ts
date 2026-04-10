@@ -120,6 +120,7 @@ test.describe("Landmark navigation tests", () => {
             },
         );
 
+        await app.closeVerifyToast();
         await app.viewRoomByName("Bob");
         // confirm the room was loaded
         await expect(page.getByText("Bob joined the room")).toBeVisible();
