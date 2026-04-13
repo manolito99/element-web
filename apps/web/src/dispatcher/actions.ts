@@ -58,6 +58,11 @@ export enum Action {
     ViewHomePage = "view_home_page",
 
     /**
+     * Navigates to the bot wiki panel
+     */
+    ViewWikiPage = "view_wiki_page",
+
+    /**
      * Forces the theme to reload. No additional payload information required.
      */
     RecheckTheme = "recheck_theme",

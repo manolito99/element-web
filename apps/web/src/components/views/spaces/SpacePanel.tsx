@@ -30,6 +30,7 @@ import {
     UserProfileSolidIcon,
     PlusIcon,
     ChevronRightIcon,
+    InfoIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";
@@ -383,9 +384,34 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
     },
 );
 
+const WikiNavButton: React.FC<{ active: boolean; isPanelCollapsed: boolean }> = ({
+    active,
+    isPanelCollapsed,
+}) => {
+    return (
+        <li
+            className={classNames("mx_SpaceItem", { collapsed: isPanelCollapsed })}
+            role="treeitem"
+            aria-selected={active}
+            title={isPanelCollapsed ? "Wiki de Bots" : undefined}
+        >
+            <SpaceButton
+                className={classNames("mx_WikiNavButton", { mx_WikiNavButton_active: active })}
+                onClick={() => defaultDispatcher.dispatch({ action: Action.ViewWikiPage })}
+                selected={active}
+                label="Wiki de Bots"
+                isNarrow={isPanelCollapsed}
+                size="32px"
+                icon={<InfoIcon />}
+            />
+        </li>
+    );
+};
+
 const SpacePanel: React.FC = () => {
     const [dragging, setDragging] = useState(false);
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
+    const [isWikiActive, setIsWikiActive] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
         if (ref.current) UIStore.instance.trackElementDimensions("SpacePanel", ref.current);
@@ -395,6 +421,14 @@ const SpacePanel: React.FC = () => {
     useDispatcher(defaultDispatcher, (payload: ActionPayload) => {
         if (payload.action === Action.ToggleSpacePanel) {
             setPanelCollapsed(!isPanelCollapsed);
+        } else if (payload.action === Action.ViewWikiPage) {
+            setIsWikiActive(true);
+        } else if (
+            payload.action === Action.ViewHomePage ||
+            payload.action === "view_room" ||
+            payload.action === "view_user"
+        ) {
+            setIsWikiActive(false);
         }
     });
 
@@ -468,6 +502,8 @@ const SpacePanel: React.FC = () => {
                                 </InnerSpacePanel>
                             )}
                         </Droppable>
+
+                        <WikiNavButton active={isWikiActive} isPanelCollapsed={isPanelCollapsed} />
 
                         <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
 

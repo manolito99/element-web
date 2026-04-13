@@ -64,6 +64,7 @@ import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { type SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
 import LeftPanelLiveShareWarning from "../views/beacon/LeftPanelLiveShareWarning";
 import HomePage from "./HomePage";
+import BotWikiView from "../views/wiki/BotWikiView";
 import { PipContainer } from "./PipContainer";
 import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
 import { type ConfigOptions } from "../../SdkConfig";
@@ -728,6 +729,10 @@ class LoggedInView extends React.Component<IProps, IState> {
 
             case PageTypes.HomePage:
                 pageElement = <HomePage justRegistered={this.props.justRegistered} />;
+                break;
+
+            case PageTypes.WikiPage:
+                pageElement = <BotWikiView />;
                 break;
 
             case PageTypes.UserView:

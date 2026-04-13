@@ -10,6 +10,7 @@ import React, { type JSX } from "react";
 import { createRef } from "react";
 import classNames from "classnames";
 import { ExploreIcon, DialPadIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import WikiPanel from "../views/wiki/WikiPanel";
 
 import dis from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
@@ -35,7 +36,7 @@ import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
 import AccessibleButton, { type ButtonEvent } from "../views/elements/AccessibleButton";
 import PosthogTrackers from "../../PosthogTrackers";
-import type PageType from "../../PageTypes";
+import PageType from "../../PageTypes";
 import { Landmark, LandmarkNavigation } from "../../accessibility/LandmarkNavigation";
 import SettingsStore from "../../settings/SettingsStore";
 import { RoomListPanel } from "../views/rooms/RoomListPanel";
@@ -390,6 +391,17 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             mx_LeftPanel_newRoomList: useNewRoomList,
             mx_LeftPanel_minimized: this.props.isMinimized,
         });
+
+        // Show wiki panel when in wiki mode
+        if (this.props.pageType === PageType.WikiPage) {
+            return (
+                <div className={containerClasses}>
+                    <div className="mx_LeftPanel_roomListContainer">
+                        <WikiPanel />
+                    </div>
+                </div>
+            );
+        }
 
         const roomListClasses = classNames("mx_LeftPanel_actualRoomListContainer", "mx_AutoHideScrollbar");
         if (useNewRoomList) {

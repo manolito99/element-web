@@ -1,0 +1,243 @@
+/* ========== WikiPanel (sidebar) ========== */
+.mx_WikiPanel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--cpd-color-bg-canvas-default, #15191e);
+    color: var(--cpd-color-text-primary, #e3e8f0);
+    overflow: hidden;
+}
+
+.mx_WikiPanel_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 12px 12px;
+    border-bottom: 1px solid var(--cpd-color-border-disabled, #2e3440);
+    flex-shrink: 0;
+}
+
+.mx_WikiPanel_title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.mx_WikiPanel_refresh {
+    background: none;
+    border: none;
+    color: var(--cpd-color-text-secondary, #9ea8b0);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.15s;
+}
+.mx_WikiPanel_refresh:hover {
+    background: var(--cpd-color-bg-subtle-secondary, #1e2732);
+}
+
+.mx_WikiPanel_state {
+    padding: 24px 12px;
+    text-align: center;
+    color: var(--cpd-color-text-secondary, #9ea8b0);
+    font-size: 13px;
+}
+.mx_WikiPanel_state--error { color: #ff5b55; }
+
+.mx_WikiPanel_list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px 0;
+}
+
+.mx_WikiPanel_botItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin: 2px 6px;
+    transition: background 0.1s;
+    outline: none;
+}
+.mx_WikiPanel_botItem:hover,
+.mx_WikiPanel_botItem:focus {
+    background: var(--cpd-color-bg-subtle-secondary, #1e2732);
+}
+.mx_WikiPanel_botItem--selected {
+    background: var(--cpd-color-bg-action-primary-rest, #0dbd8b20);
+}
+
+.mx_WikiPanel_avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--cpd-color-green-900, #0dbd8b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    color: #fff;
+}
+
+.mx_WikiPanel_botInfo {
+    flex: 1;
+    overflow: hidden;
+}
+.mx_WikiPanel_botName {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mx_WikiPanel_botRole {
+    font-size: 12px;
+    color: var(--cpd-color-text-secondary, #9ea8b0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mx_WikiPanel_statusDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ========== BotWikiView (main content) ========== */
+.mx_BotWikiView {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--cpd-color-bg-canvas-default, #15191e);
+    color: var(--cpd-color-text-primary, #e3e8f0);
+    overflow: hidden;
+}
+
+.mx_BotWikiView--empty {
+    align-items: center;
+    justify-content: center;
+}
+
+.mx_BotWikiView_emptyState {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--cpd-color-text-secondary, #9ea8b0);
+}
+.mx_BotWikiView_emptyIcon { font-size: 48px; margin-bottom: 16px; }
+.mx_BotWikiView_emptyState h2 { margin: 0 0 8px; font-size: 20px; color: inherit; }
+.mx_BotWikiView_emptyState p { margin: 0; font-size: 14px; }
+
+.mx_BotWikiView_header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 24px 28px 16px;
+    border-bottom: 1px solid var(--cpd-color-border-disabled, #2e3440);
+    flex-shrink: 0;
+    gap: 16px;
+}
+
+.mx_BotWikiView_headerLeft {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.mx_BotWikiView_avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--cpd-color-green-900, #0dbd8b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+    color: #fff;
+}
+
+.mx_BotWikiView_botName {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mx_BotWikiView_meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.mx_BotWikiView_badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.mx_BotWikiView_badge--role { background: #1a3a5c; color: #7ec8f0; }
+.mx_BotWikiView_badge--type { background: #2d1f5e; color: #b09ef5; }
+.mx_BotWikiView_badge--status { background: #1a3a2a; color: #0dbd8b; }
+
+.mx_BotWikiView_matrixId {
+    font-size: 12px;
+    color: var(--cpd-color-text-secondary, #9ea8b0);
+    font-family: monospace;
+}
+
+.mx_BotWikiView_refresh {
+    background: none;
+    border: 1px solid var(--cpd-color-border-disabled, #2e3440);
+    color: var(--cpd-color-text-secondary, #9ea8b0);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    flex-shrink: 0;
+}
+.mx_BotWikiView_refresh:hover { background: var(--cpd-color-bg-subtle-secondary, #1e2732); }
+
+.mx_BotWikiView_content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+}
+
+.mx_BotWikiView_loading {
+    color: var(--cpd-color-text-secondary, #9ea8b0);
+    font-size: 14px;
+    text-align: center;
+    padding-top: 40px;
+}
+
+.mx_BotWikiView_markdown {
+    line-height: 1.7;
+    font-size: 15px;
+    max-width: 800px;
+}
+.mx_BotWikiView_markdown h1 { font-size: 22px; margin: 0 0 12px; font-weight: 600; }
+.mx_BotWikiView_markdown h2 { font-size: 18px; margin: 24px 0 8px; font-weight: 600; border-bottom: 1px solid var(--cpd-color-border-disabled, #2e3440); padding-bottom: 4px; }
+.mx_BotWikiView_markdown h3 { font-size: 15px; margin: 16px 0 6px; font-weight: 600; }
+.mx_BotWikiView_markdown p { margin: 0 0 12px; }
+.mx_BotWikiView_markdown code { background: #1e2732; padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 13px; }
+.mx_BotWikiView_markdown hr { border: none; border-top: 1px solid var(--cpd-color-border-disabled, #2e3440); margin: 16px 0; }
+.mx_BotWikiView_markdown a { color: #0dbd8b; text-decoration: none; }
+.mx_BotWikiView_markdown a:hover { text-decoration: underline; }
+.mx_BotWikiView_markdown strong { font-weight: 600; }
