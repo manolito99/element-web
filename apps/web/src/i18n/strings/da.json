@@ -1938,8 +1938,6 @@
             "aliases_section": "Rummets adresser",
             "avatar_field_label": "Avatar for rummet",
             "canonical_alias_field_label": "Hovedadresse",
-            "default_url_previews_off": "URL-forhåndsvisninger er som standard deaktiveret for deltagere i dette rum.",
-            "default_url_previews_on": "URL-forhåndsvisninger er som standard aktiveret for deltagere i dette rum.",
             "description_space": "Redigér indstillinger for din klynge.",
             "error_creating_alias_description": "Der opstod en fejl under oprettelsen af ​​adressen. Den er muligvis ikke tilladt af serveren, eller der er opstået en midlertidig fejl.",
             "error_creating_alias_title": "Fejl ved oprettelse af adresse",
@@ -1966,12 +1964,7 @@
             "published_aliases_explainer_space": "Publicerede adresser kan bruges af alle til at tilslutte sig din klynge.",
             "published_aliases_section": "Offentliggjorte adresser",
             "save": "Gem ændringer",
-            "topic_field_label": "Rummets emne",
-            "url_preview_encryption_warning": "I krypterede rum, som dette, er URL-forhåndsvisninger som standard deaktiveret for at sikre, at din hjemmeserver (hvor forhåndsvisningerne genereres) ikke kan indsamle oplysninger om links, du ser i dette rum.",
-            "url_preview_explainer": "Når nogen indtaster en URL i sin besked, kan der vises en forhåndsvisning af URL'en, der giver flere oplysninger om linket, f.eks. titel, beskrivelse og et billede fra webstedet.",
-            "url_previews_section": "URL-forhåndsvisninger",
-            "user_url_previews_default_off": "Du har <a>deaktiveret</a> URL-forhåndsvisning som standard.",
-            "user_url_previews_default_on": "Du har <a>aktiveret</a> URL-forhåndsvisninger som standard."
+            "topic_field_label": "Rummets emne"
         },
         "notifications": {
             "browse_button": "Gennemse",
@@ -2292,8 +2285,6 @@
             "spell_check_locale_placeholder": "Vælg en lokalitet"
         },
         "inline_url_previews_default": "Aktivér indbyggede URL-forhåndsvisninger som standard",
-        "inline_url_previews_room": "Aktivér forhåndsvisning af URL-adresser som standard for deltagere i dette rum",
-        "inline_url_previews_room_account": "Aktivér forhåndsvisning af URL-adresser for dette rum (påvirker kun dig)",
         "insert_trailing_colon_mentions": "Indsæt et afsluttende kolon efter brugeromtaler i starten af en meddelelse",
         "jump_to_bottom_on_send": "Gå til bunden af tidslinjen, når du sender en besked",
         "key_backup": {

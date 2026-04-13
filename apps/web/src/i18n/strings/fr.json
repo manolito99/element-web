@@ -829,7 +829,7 @@
         "invalid_json": "Ne semble pas être du JSON valide.",
         "level": "Rang",
         "low_bandwidth_mode": "Mode faible bande passante",
-        "low_bandwidth_mode_description": "Nécessite un serveur d’accueil compatible.",
+        "low_bandwidth_mode_description": "Désactive le chiffrement, la présence, les avatars, les accusés de lecture et les notifications de saisie.",
         "main_timeline": "Historique principal",
         "manual_device_verification": "Vérification manuelle de l'appareil",
         "no_receipt_found": "Aucun accusé disponible",
@@ -2237,8 +2237,6 @@
             "aliases_section": "Adresses du salon",
             "avatar_field_label": "Avatar du salon",
             "canonical_alias_field_label": "Adresse principale",
-            "default_url_previews_off": "Les aperçus d'URL sont désactivés par défaut pour les participants de ce salon.",
-            "default_url_previews_on": "Les aperçus d'URL sont activés par défaut pour les participants de ce salon.",
             "description_space": "Modifiez les paramètres de votre espace.",
             "error_creating_alias_description": "Une erreur est survenue lors de la création de l’adresse. Ce n’est peut-être pas autorisé par le serveur ou une erreur temporaire est survenue.",
             "error_creating_alias_title": "Erreur lors de la création de l’adresse",
@@ -2269,12 +2267,7 @@
             "published_aliases_explainer_space": "Les adresses publiées peuvent être utilisées par tout le monde sur tous les serveurs pour rejoindre votre espace.",
             "published_aliases_section": "Adresses publiées",
             "save": "Enregistrer les modifications",
-            "topic_field_label": "Sujet du salon",
-            "url_preview_encryption_warning": "Dans les salons chiffrés, comme celui-ci, l’aperçu des liens est désactivé par défaut pour s’assurer que le serveur d’accueil (où sont générés les aperçus) ne puisse pas collecter d’informations sur les liens qui apparaissent dans ce salon.",
-            "url_preview_explainer": "Quand quelqu’un met un lien dans son message, un aperçu du lien peut être affiché afin de fournir plus d’informations sur ce lien comme le titre, la description et une image du site.",
-            "url_previews_section": "Aperçus des liens",
-            "user_url_previews_default_off": "Vous avez <a>désactivé</a> les aperçus d’URL par défaut.",
-            "user_url_previews_default_on": "Vous avez <a>activé</a> les aperçus d’URL par défaut."
+            "topic_field_label": "Sujet du salon"
         },
         "notifications": {
             "browse_button": "Parcourir",
@@ -2697,8 +2690,6 @@
             "username": "Nom d’utilisateur"
         },
         "inline_url_previews_default": "Activer l’aperçu des URL par défaut",
-        "inline_url_previews_room": "Activer l’aperçu des URL par défaut pour les participants de ce salon",
-        "inline_url_previews_room_account": "Activer l’aperçu des URL pour ce salon (n’affecte que vous)",
         "insert_trailing_colon_mentions": "Insérer deux-points après les mentions de l'utilisateur au début d'un message",
         "invite_controls": {
             "default_label": "Autoriser les utilisateurs à vous inviter dans les salons"
