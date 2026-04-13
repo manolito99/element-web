@@ -14,11 +14,15 @@ WORKDIR /src
 # Install dependencies
 COPY --parents package.json pnpm-lock.yaml pnpm-workspace.yaml patches scripts **/package.json /src/
 RUN corepack enable
+# Fix CRLF line endings from Windows git checkout (all shell scripts)
+RUN find /src -name "*.sh" -exec sed -i 's/\r//' {} \;
 RUN --mount=type=bind,source=.git,target=/src/.git /src/scripts/docker-link-repos.sh
 RUN pnpm install
 
 # Build
 COPY --link --exclude=.git --exclude=apps/web/docker . /src
+# Fix CRLF again after full source copy (all shell scripts, Windows git checkout)
+RUN find /src -name "*.sh" -exec sed -i 's/\r//' {} \;
 RUN --mount=type=bind,source=.git,target=/src/.git /src/scripts/docker-package.sh
 
 # Copy the config now so that we don't create another layer in the app image
@@ -39,6 +43,9 @@ COPY --from=builder /src/apps/web/webapp /app
 # through `envsubst` by the nginx docker image entry point.
 COPY /apps/web/docker/nginx-templates/* /etc/nginx/templates/
 COPY /apps/web/docker/docker-entrypoint.d/* /docker-entrypoint.d/
+
+# Fix CRLF line endings in entrypoint scripts (Windows git checkout)
+RUN find /docker-entrypoint.d -name "*.sh" -exec sed -i 's/\r//' {} \;
 
 RUN rm -rf /usr/share/nginx/html \
   && ln -s /app /usr/share/nginx/html
