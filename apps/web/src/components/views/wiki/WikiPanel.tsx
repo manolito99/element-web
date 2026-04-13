@@ -4,6 +4,7 @@
  */
 import React, { useEffect, useState, useCallback } from "react";
 import WikiStore, { BotInfo } from "./WikiStore";
+import "./wiki.css";
 
 const STATUS_COLORS: Record<string, string> = {
     running: "#0dbd8b",

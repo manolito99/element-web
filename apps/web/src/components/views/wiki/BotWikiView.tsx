@@ -4,6 +4,7 @@
  */
 import React, { useEffect, useState, useCallback } from "react";
 import WikiStore, { BotInfo } from "./WikiStore";
+import "./wiki.css";
 
 // Minimal markdown → HTML renderer (no extra deps needed)
 function renderMarkdown(md: string): string {
@@ -113,6 +114,11 @@ const BotWikiView: React.FC = () => {
             <div className="mx_BotWikiView_content">
                 {content === null ? (
                     <div className="mx_BotWikiView_loading">Cargando wiki...</div>
+                ) : content === "" ? (
+                    <div className="mx_BotWikiView_emptyWiki">
+                        <p>Este bot no tiene wiki configurada.</p>
+                        <p>Usa <code>PUT /api/bots/{bot.id}/wiki</code> para añadir contenido.</p>
+                    </div>
                 ) : (
                     <div
                         className="mx_BotWikiView_markdown"

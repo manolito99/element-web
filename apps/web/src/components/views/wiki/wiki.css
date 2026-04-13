@@ -74,7 +74,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: var(--cpd-color-green-900, #0dbd8b);
+    background: #0dbd8b;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -115,6 +115,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     background: var(--cpd-color-bg-canvas-default, #15191e);
     color: var(--cpd-color-text-primary, #e3e8f0);
     overflow: hidden;
@@ -156,7 +157,7 @@
     width: 52px;
     height: 52px;
     border-radius: 50%;
-    background: var(--cpd-color-green-900, #0dbd8b);
+    background: #0dbd8b;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -241,3 +242,20 @@
 .mx_BotWikiView_markdown a { color: #0dbd8b; text-decoration: none; }
 .mx_BotWikiView_markdown a:hover { text-decoration: underline; }
 .mx_BotWikiView_markdown strong { font-weight: 600; }
+
+.mx_BotWikiView_emptyWiki {
+    padding: 32px;
+    text-align: center;
+    color: var(--cpd-color-text-secondary, #9ea8b0);
+    font-size: 14px;
+    line-height: 1.6;
+}
+.mx_BotWikiView_emptyWiki p { margin: 0 0 8px; }
+.mx_BotWikiView_emptyWiki code {
+    background: rgba(255,255,255,0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+    word-break: break-all;
+}
