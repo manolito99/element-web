@@ -444,6 +444,18 @@ const SpacePanel: React.FC = () => {
         }
     });
 
+    // Exit wiki mode when the user selects a space/room (SpaceStore change)
+    useEffect(() => {
+        if (!isWikiActive) return;
+        const onSpaceChange = (): void => {
+            defaultDispatcher.dispatch({ action: Action.ViewHomePage });
+        };
+        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, onSpaceChange);
+        return () => {
+            SpaceStore.instance.off(UPDATE_SELECTED_SPACE, onSpaceChange);
+        };
+    }, [isWikiActive]);
+
     const newRoomListEnabled = useSettingValue("feature_new_room_list");
 
     return (
