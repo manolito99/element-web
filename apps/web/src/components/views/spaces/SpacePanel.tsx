@@ -30,8 +30,14 @@ import {
     UserProfileSolidIcon,
     PlusIcon,
     ChevronRightIcon,
-    InfoIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
+
+// Inline book SVG — no existe en compound-design-tokens
+const BookIcon: React.FC = () => (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden>
+        <path d="M19 2H6.5A3.5 3.5 0 0 0 3 5.5v13A3.5 3.5 0 0 0 6.5 22H20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zm-1 18H6.5a1.5 1.5 0 0 1 0-3H18v3zm0-5H6.5A3.49 3.49 0 0 0 5 16V5.5A1.5 1.5 0 0 1 6.5 4H18v11z" />
+    </svg>
+);
 
 import { _t } from "../../../languageHandler";
 import { useContextMenu } from "../../structures/ContextMenu";
@@ -294,21 +300,27 @@ interface IInnerSpacePanelProps extends DroppableProvidedProps {
     setPanelCollapsed: Dispatch<SetStateAction<boolean>>;
     isDraggingOver: boolean;
     innerRef: RefCallback<HTMLElement>;
+    wikiNavButton?: ReactNode;
 }
 
 // Optimisation based on https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md#recommended-droppable--performance-optimisation
 const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
-    ({ children, isPanelCollapsed, setPanelCollapsed, isDraggingOver, innerRef, ...props }) => {
+    ({ children, isPanelCollapsed, setPanelCollapsed, isDraggingOver, innerRef, wikiNavButton, ...props }) => {
         const [invites, metaSpaces, actualSpaces, activeSpace] = useSpaces();
         const activeSpaces = activeSpace ? [activeSpace] : [];
 
         const moduleSpaceItems = useModuleSpacePanelItems(ModuleApi.instance.extras);
 
+        // Insert wikiNavButton right after the Home button
         const metaSpacesSection = metaSpaces
             .filter((key) => !(key === MetaSpace.VideoRooms && !SettingsStore.getValue("feature_video_rooms")))
-            .map((key) => {
+            .flatMap((key) => {
                 const Component = metaSpaceComponentMap[key];
-                return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
+                const item = <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
+                if (key === MetaSpace.Home && wikiNavButton) {
+                    return [item, <React.Fragment key="wiki-nav">{wikiNavButton}</React.Fragment>];
+                }
+                return [item];
             });
 
         return (
@@ -402,7 +414,7 @@ const WikiNavButton: React.FC<{ active: boolean; isPanelCollapsed: boolean }> = 
                 label="Wiki de Bots"
                 isNarrow={isPanelCollapsed}
                 size="32px"
-                icon={<InfoIcon />}
+                icon={<BookIcon />}
             />
         </li>
     );
@@ -497,13 +509,14 @@ const SpacePanel: React.FC = () => {
                                     setPanelCollapsed={setPanelCollapsed}
                                     isDraggingOver={snapshot.isDraggingOver}
                                     innerRef={provided.innerRef}
+                                    wikiNavButton={
+                                        <WikiNavButton active={isWikiActive} isPanelCollapsed={isPanelCollapsed} />
+                                    }
                                 >
                                     {provided.placeholder}
                                 </InnerSpacePanel>
                             )}
                         </Droppable>
-
-                        <WikiNavButton active={isWikiActive} isPanelCollapsed={isPanelCollapsed} />
 
                         <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
 
